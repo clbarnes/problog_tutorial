@@ -29,7 +29,11 @@ def run_pl_file(path):
 
 
 def check_results(original_path, edited_path):
-    assert os.path.exists(original_path)
-    assert os.path.exists(edited_path)
+    assert os.path.exists(original_path), 'Original file path {} does not exist'.format(original_path)
+    assert os.path.exists(edited_path), 'Edited file path {} does not exist'.format(edited_path)
 
-    assert run_pl_file(original_path) == run_pl_file(edited_path)
+    original_results = run_pl_file(original_path)
+    edited_results = run_pl_file(edited_path)
+
+    assert original_results == edited_results, \
+        'Result from {} does not match result from {}'.format(edited_path, original_path)
