@@ -44,6 +44,11 @@ def test_edited():
         yield check_edited, original_path, edited_path
 
 
+def test_originals_run():
+    for original_path, _ in generate_pl_files():
+        yield run_pl_file(original_path)
+
+
 def test_same_results():
     for original_path, edited_path in generate_pl_files():
         yield check_results, original_path, edited_path
@@ -53,7 +58,10 @@ def run_pl_file(path):
     with open(path) as f:
         s = f.read()
 
-    return pl_str2result(s)
+    try:
+        return pl_str2result(s)
+    except Exception as e:
+        raise AssertionError('Running file {} failed'.format(path), e)
 
 
 def check_exists(original_path, edited_path):
