@@ -8,6 +8,8 @@ EDITED_DIR = 'edited'
 
 LONG_RUNNING = []  # fill in if any are really slow
 
+TOLERANCE = 0.001
+
 
 def generate_pl_files():
     for tutorial_name in os.listdir(ORIGINALS_DIR):
@@ -17,6 +19,19 @@ def generate_pl_files():
                     os.path.join(ORIGINALS_DIR, tutorial_name, filename),
                     os.path.join(EDITED_DIR, tutorial_name, filename)
                 )
+
+
+def pl_str2result(s):
+    return {str(key): value for key, value in ProbLog.convert(PrologString(s), SDD).evaluate().items()}
+
+
+def is_close(a, b):
+    return abs(a-b) < TOLERANCE
+
+
+def test_problog_works():
+    test_str = '0.5::heads. query(heads).'
+    assert is_close(pl_str2result(test_str)['heads'], 0.5)
 
 
 def test_exist():
@@ -38,7 +53,7 @@ def run_pl_file(path):
     with open(path) as f:
         s = f.read()
 
-    return ProbLog.convert(PrologString(s), SDD).evaluate()
+    return pl_str2result(s)
 
 
 def check_exists(original_path, edited_path):
@@ -62,6 +77,3 @@ def check_results(original_path, edited_path):
 
     assert original_results == edited_results, \
         'Result from {} does not match result from {}'.format(edited_path, original_path)
-
-
-
