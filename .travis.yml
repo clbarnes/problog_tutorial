@@ -2,6 +2,9 @@ language: python
 python:
   - "3.5"
 # command to install dependencies
-install: "pip install -r requirements.txt; problog install"
+install:
+  - pip install -r requirements.txt
+  - rm -r /home/travis/virtualenv/python3.5.0/lib/python3.5/site-packages/problog/lib/python3
+  - problog install
 # command to run tests
 script: nosetests -v
