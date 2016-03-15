@@ -6,7 +6,9 @@ from problog.sdd_formula import SDD
 ORIGINALS_DIR = 'originals'
 EDITED_DIR = 'edited'
 
-LONG_RUNNING = []  # fill in if any are really slow
+LONG_RUNNING = [
+    '17 - Inferring an Arithmetic Expression/example_01.pl'
+]
 
 TOLERANCE = 0.001
 
@@ -49,9 +51,9 @@ def test_originals_run():
         yield run_pl_file(original_path)
 
 
-def test_same_results():
-    for original_path, edited_path in generate_pl_files():
-        yield check_results, original_path, edited_path
+# def test_same_results():
+#     for original_path, edited_path in generate_pl_files():
+#         yield check_results, original_path, edited_path
 
 
 def run_pl_file(path):
@@ -80,6 +82,9 @@ def check_edited(original_path, edited_path):
 
 
 def check_results(original_path, edited_path):
+    """
+    Note: doesn't work if variable names have changed
+    """
     original_results = run_pl_file(original_path)
     edited_results = run_pl_file(edited_path)
 

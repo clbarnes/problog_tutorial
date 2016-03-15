@@ -1,15 +1,15 @@
-1/3::dice(1,D); 1/3::dice(2,D); 1/3::dice(3,D) :- die(D).
+1/3::roll(1,D); 1/3::roll(2,D); 1/3::roll(3,D) :- die(D).
 die(X) :- between(1,3,X).
 
 roll(L) :-
    next(1,[1],L).
 
 next(N,Seen,Rev) :-
-   dice(Now,N),
+   roll(Now,N),
    member(Now,Seen),
    reverse(Seen,[],Rev).
 next(N,Seen,List) :-
-   dice(Now,N),
+   roll(Now,N),
    \+ member(Now,Seen),
    next(Now,[Now|Seen],List).
 

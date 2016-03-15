@@ -8,5 +8,5 @@ odd(X) :- three(X).
 odd(X) :- five(X).
 even(X) :- \+ odd(X).
 
-query(odd(_)).
-query(even(_)).
+query(odd(_)).  % '_' is an anonymous variable - problog returns the probabilities for all known objects which have that property
+query(even(_)).  % beware! even() is only defined as the negation of odd, which doesn't work with non-ground queries

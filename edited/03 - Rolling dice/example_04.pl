@@ -1,14 +1,18 @@
-1/6::dice(1,D); 1/6::dice(2,D); 1/6::dice(3,D); 1/6::dice(4,D); 1/6::dice(5,D); 1/6::dice(6,D) :- die(D).
+1/6::roll(1,D); 1/6::roll(2,D); 1/6::roll(3,D); 1/6::roll(4,D); 1/6::roll(5,D); 1/6::roll(6,D) :- die(D).
+% We can now define any number of fair dice
 
-die(1).
-die(2).
+die(first_die).
+die(second_die).
 
-sum(S) :- dice(A,1), dice(B,2), S is A+B.
-odd(D) :- dice(1,D).
-odd(D) :- dice(3,D).
-odd(D) :- dice(5,D).
+sum(Score) :- roll(Result1,first_die), roll(Result2,second_die), Score is Result1 + Result2.  % You can use arithmetic!
+% N.B.: variables used in arithmetic must start with an upper case character
+odd(D) :- roll(1,D).
+odd(D) :- roll(3,D).
+odd(D) :- roll(5,D).
 even(D) :- \+ odd(D).
 
 query(sum(_)).
-evidence(even(1)).
-evidence(odd(2)).
+
+% Evidence written after the query is still taken into account
+evidence(even(first_die)).
+evidence(odd(second_die)).
